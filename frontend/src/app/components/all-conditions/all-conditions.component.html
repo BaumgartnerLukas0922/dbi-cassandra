@@ -1,0 +1,15 @@
+<h5>Registered Conditions</h5>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let condition of conditions">
+            <td>{{condition.name}}</td>
+            <td>{{condition.description}}</td>
+        </tr>
+    </tbody>
+</table>
