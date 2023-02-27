@@ -1,0 +1,59 @@
+<div class="mb-3 row m-3">
+    <label for="search_name" class="col-1 col-form-label">Search: </label>
+    <div class="col-2">
+      <input type="text" class="form-control" id="search_name" [(ngModel)]="name_search">
+    </div>
+
+    <label for="search_name" class="col-2 col-form-label">Curr. in Hospital: </label>
+    <div class="col-2">
+        <select class="form-select" [(ngModel)]="isCurrentlyInHospital" id="inHostpital">
+            <option>All</option>
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+    </div>
+
+    <label for="search_name" class="col-2 col-form-label">Is Diagnosed: </label>
+    <div class="col-2">
+        <select class="form-select" id="inHostpital" [(ngModel)]="isDiagnosed">
+            <option>All</option>
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+    </div>
+    
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>SSN</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let patient of patients">
+            <ng-container *ngIf="patient.firstName.startsWith(name_search)|| 
+            patient.lastName.startsWith(name_search) || 
+            name_search == ''">
+            <ng-container *ngIf="
+            isCurrentlyInHospital == 'All' ||
+            (patient.isCurrentlyInHospital== true && isCurrentlyInHospital == 'Yes') || 
+            (patient.isCurrentlyInHospital == false && isCurrentlyInHospital == 'No')
+            ">
+            <tr *ngIf="
+            isDiagnosed == 'All' || 
+            (patient.isDiagnosed == true && isDiagnosed == 'Yes') || 
+            (patient.isDiagnosed == false && isDiagnosed == 'No')
+            ">
+                <td>{{patient.firstName}}</td>
+                <td>{{patient.lastName}}</td>
+                <td>{{patient.ssn}}</td>
+                <td><button class="btn btn-outline-dark" (click)="showDetails(patient.id)">Details</button></td>
+            </tr>
+        </ng-container>
+        </ng-container>
+    </ng-container>
+    </tbody>
+</table>

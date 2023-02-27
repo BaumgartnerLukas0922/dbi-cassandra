@@ -1,0 +1,5 @@
+<div class="row">
+    <button (click)="stationClicked(station.id)" class="col-6 btn" *ngFor="let station of stations">
+        <img src="assets/svg/{{station.name}}.svg" width="500">
+    </button>
+</div>
