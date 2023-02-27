@@ -1,11 +1,28 @@
 package at.htl.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-public class Patient {
+public class Patient extends PanacheEntityBase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long id;
     @ManyToOne
-    Station station;
+    public Station station;
+
+    public boolean IsCurrentlyInHospital;
+    public boolean IsDiagnosed;
+
+    public double Weight;
+    public double Height;
+
+    public String SSN;
+
+    public String FirstName;
+    public String LastName;
+
+    public LocalDateTime DOB;
 }
