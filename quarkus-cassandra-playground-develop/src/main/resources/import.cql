@@ -35,3 +35,12 @@ values (1,'Intensive Care', 20);
 
 insert into station (id, name, total_number_of_beds)
 values (2,'Nursery', 15);
+
+insert into station (id, name, total_number_of_beds)
+values (3,'Immediate Care', 30);
+
+insert into station (id, name, total_number_of_beds)
+values (4,'Emergency Care', 50);
+
+insert into station (id, name, total_number_of_beds)
+values (5,'Radiology', 12);
