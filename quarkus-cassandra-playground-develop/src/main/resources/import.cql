@@ -30,18 +30,6 @@ values (5,3,'Chills');
 insert into dbi.symptom (id, condition_id, symptom_name)
 values (6,3,'Fever');
 
-insert into dbi.symptom (id, condition_id, symptom_name)
-values (7,1,'Red color');
-
-insert into dbi.symptom (id, condition_id, symptom_name)
-values (8,1,'Pain when swallowing');
-
-insert into dbi.symptom (id, condition_id, symptom_name)
-values (6,3,'Fever');
-
-
-
-
 insert into dbi.station (id, name, total_number_of_beds)
 values (1,'Intensive Care', 20);
 
@@ -60,11 +48,3 @@ values (5,'Radiology', 12);
 insert into dbi.patient (id, first_name, height, currently_in_hospital, diagnosed, last_name, ssn, station_id,
                      weight)
 values (1 , 'John', 170, false,false, 'Smith','1111111111', 2, 70);
-
-insert into dbi.patient (id, first_name, height, currently_in_hospital, diagnosed, last_name, ssn, station_id,
-                     weight)
-values (2 , 'Tamara', 170, false,false, 'Melcher','234111111', 1, 65);
-
-insert into dbi.patient (id, first_name, height, currently_in_hospital, diagnosed, last_name, ssn, station_id,
-                         weight)
-values (3 , 'Anna', 160, true,false, 'Wiesinger','234115111', 4, 75);

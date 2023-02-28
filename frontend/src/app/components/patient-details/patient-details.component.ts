@@ -25,8 +25,8 @@ export class PatientDetailsComponent implements OnInit {
     id: "", 
     firstName: "", 
     height: 0,  
-    isCurrentlyInHospital: false, 
-    isDiagnosed: false, 
+    currentlyInHospital: false, 
+    diagnosed: false, 
     lastName: "", 
     ssn: "", 
     weight: 0,
@@ -72,20 +72,21 @@ export class PatientDetailsComponent implements OnInit {
       {
         next: res => {
           this.patient = res;
+          this.station = this.stations.find(s => s.id == this.patient.id)!
           this.stationService.getStationById(this.patient.stationId!).subscribe(
             {
               next: res => {
                 this.station = res;
 
-                this.stationService.getAmountOnStation(this.station.id).subscribe({
+                this.stationService.getAmountOnStation(this.patient.stationId!).subscribe({
                   next: res => {
-                    this.numberOfBeds = res
+                    this.numberOfBeds = res;
                   }
                 });
               }
             }
           )
-          console.log("Curr: "+this.patient.isCurrentlyInHospital + " Diagnose: "+this.patient.isDiagnosed)
+          console.log("Curr: "+this.patient.currentlyInHospital + " Diagnose: "+this.patient.diagnosed)
 
           this.diagnosisService.getDiagnosisForPatient(this.patientId).subscribe(
             {
@@ -127,7 +128,7 @@ export class PatientDetailsComponent implements OnInit {
     this.patientService.releasePatient(this.patient.id).subscribe(
       {
         next: res => {
-          console.log("Curr: "+this.patient.isCurrentlyInHospital + " Diagnose: "+this.patient.isDiagnosed)
+          console.log("Curr: "+this.patient.currentlyInHospital + " Diagnose: "+this.patient.diagnosed)
           this.loadPatient()
         }
       }

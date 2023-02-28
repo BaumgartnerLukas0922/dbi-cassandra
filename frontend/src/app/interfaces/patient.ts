@@ -5,8 +5,8 @@ export interface Patient {
     height: number,
     weight: number,
     ssn: string,
-    isDiagnosed: boolean,
-    isCurrentlyInHospital: boolean,
+    diagnosed: boolean,
+    currentlyInHospital: boolean,
     stationId?: string
     dob: string
 }

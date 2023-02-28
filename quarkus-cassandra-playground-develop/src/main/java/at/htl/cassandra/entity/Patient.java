@@ -19,8 +19,8 @@ public class Patient {
 
     private Long stationId;
 
-    private boolean isCurrentlyInHospital;
-    private boolean isDiagnosed;
+    private boolean currentlyInHospital;
+    private boolean diagnosed;
 
     private double weight;
     private double height;

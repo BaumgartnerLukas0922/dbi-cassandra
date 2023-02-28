@@ -50,7 +50,7 @@
         </div>
     </ng-container>
 
-    <button (click)="admitClclicked()" *ngIf="!patient.isCurrentlyInHospital" class="btn btn-outline-dark m-2">Admit</button>
-    <button (click)="releaseClclicked()" *ngIf="patient.isCurrentlyInHospital" class="btn btn-outline-dark m-2">Release</button>
-    <button (click)="diagnoseClclicked(patient.id)" [disabled]="patient.isDiagnosed == true || patient.isCurrentlyInHospital==false" class="btn btn-outline-dark m-2">Diagnose</button>
+    <button (click)="admitClclicked()" *ngIf="!patient.currentlyInHospital" class="btn btn-outline-dark m-2">Admit</button>
+    <button (click)="releaseClclicked()" *ngIf="patient.currentlyInHospital" class="btn btn-outline-dark m-2">Release</button>
+    <button (click)="diagnoseClclicked(patient.id)" [disabled]="patient.diagnosed == true || patient.currentlyInHospital==false" class="btn btn-outline-dark m-2">Diagnose</button>
 </div>

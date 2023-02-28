@@ -4,6 +4,7 @@ import at.htl.cassandra.condition.ConditionDao;
 import at.htl.cassandra.condition.QueryConditionDao;
 import at.htl.cassandra.entity.Condition;
 import at.htl.cassandra.entity.Station;
+import at.htl.cassandra.patient.QueryPatientDao;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -19,6 +20,8 @@ public class StationResource {
 
     @Inject
     QueryStationDao extendedDao;
+    @Inject
+    QueryPatientDao extendedPatientDao;
 
     @GET
     @Path("getAll")
@@ -30,5 +33,11 @@ public class StationResource {
     @Path("getById")
     public List<Station> getStationById(@QueryParam("id") Long stationId) {
         return extendedDao.findStationById(stationId);
+    }
+
+    @GET
+    @Path("getAmountOnStation")
+    public int getAmountOnStation(@QueryParam("id") Long stationId){
+        return extendedPatientDao.findPatientByStation(stationId).size();
     }
 }

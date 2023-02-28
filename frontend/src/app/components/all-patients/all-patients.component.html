@@ -15,7 +15,7 @@
 
     <label for="search_name" class="col-2 col-form-label">Is Diagnosed: </label>
     <div class="col-2">
-        <select class="form-select" id="inHostpital" [(ngModel)]="isDiagnosed">
+        <select class="form-select" id="isDiagnosed" [(ngModel)]="isDiagnosed">
             <option>All</option>
             <option>Yes</option>
             <option>No</option>
@@ -39,13 +39,13 @@
             name_search == ''">
             <ng-container *ngIf="
             isCurrentlyInHospital == 'All' ||
-            (patient.isCurrentlyInHospital== true && isCurrentlyInHospital == 'Yes') || 
-            (patient.isCurrentlyInHospital == false && isCurrentlyInHospital == 'No')
+            (patient.currentlyInHospital== true && isCurrentlyInHospital == 'Yes') || 
+            (patient.currentlyInHospital == false && isCurrentlyInHospital == 'No')
             ">
             <tr *ngIf="
             isDiagnosed == 'All' || 
-            (patient.isDiagnosed == true && isDiagnosed == 'Yes') || 
-            (patient.isDiagnosed == false && isDiagnosed == 'No')
+            (patient.diagnosed == true && isDiagnosed == 'Yes') || 
+            (patient.diagnosed == false && isDiagnosed == 'No')
             ">
                 <td>{{patient.firstName}}</td>
                 <td>{{patient.lastName}}</td>
