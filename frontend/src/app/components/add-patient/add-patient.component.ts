@@ -24,8 +24,8 @@ export class AddPatientComponent implements OnInit {
     firstName: "",
     height: 0,
     id: "",
-    isCurrentlyInHospital: false,
-    isDiagnosed: false,
+    currentlyInHospital: false,
+    diagnosed: false,
     lastName: "",
     ssn: "",
     weight: 0

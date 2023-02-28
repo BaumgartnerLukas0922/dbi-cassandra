@@ -48,8 +48,8 @@ export class DiagnosisDetailsComponent implements OnInit {
     height: 0,
     weight: 0,
     ssn: '',
-    isDiagnosed: false,
-    isCurrentlyInHospital: false,
+    diagnosed: false,
+    currentlyInHospital: false,
     dob: ''
   }
 
