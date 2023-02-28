@@ -45,5 +45,6 @@ values (4,'Emergency Care', 50);
 insert into station (id, name, total_number_of_beds)
 values (5,'Radiology', 12);
 
-insert into patient (id, dob, first_name, height, is_currently_in_hospital, last_name, station_id, weight)
-values (1,'2018-10-20' , 'John', 170, false, 'Smith', 2, 70);
+insert into patient (id, first_name, height, currently_in_hospital, diagnosed, last_name, ssn, station_id,
+                     weight)
+values (1 , 'John', 170, false,false, 'Smith','1111111111', 2, 70);
