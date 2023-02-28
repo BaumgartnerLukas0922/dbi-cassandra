@@ -7,11 +7,11 @@ import lombok.Data;
 @Builder
 public class ConditionSymptomDto implements Comparable<ConditionSymptomDto>{
     private Long id;
-    private String conditionName;
-    private int symptomCount;
+    private String name;
+    private int symptomsCount;
 
     @Override
     public int compareTo(ConditionSymptomDto conditionSymptomDto) {
-        return Integer.compare(this.symptomCount, conditionSymptomDto.symptomCount);
+        return Integer.compare(conditionSymptomDto.symptomsCount, this.symptomsCount);
     }
 }

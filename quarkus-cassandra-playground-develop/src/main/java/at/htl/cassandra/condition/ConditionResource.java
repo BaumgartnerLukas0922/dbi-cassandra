@@ -3,6 +3,7 @@ package at.htl.cassandra.condition;
 
 import at.htl.cassandra.entity.Condition;
 import at.htl.cassandra.entity.dto.ConditionSymptomDto;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -27,14 +28,14 @@ public class ConditionResource {
 
     @GET
     @Path("getById")
-    public List<Condition> getPagedCustomersByCustomerNumber(@QueryParam("id") Long conditionId) {
+    public Condition getPagedCustomersByCustomerNumber(@QueryParam("id") Long conditionId) {
         return extendedDao.findConditionById(conditionId);
     }
 
 
-    @GET
+    @POST
     @Path("getConditionsBySymptoms")
-    public List<ConditionSymptomDto> getPagedCustomersByCustomerNumber(@QueryParam("symptoms") List<String> symptoms) {
+    public List<ConditionSymptomDto> getPagedCustomersByCustomerNumber(@RequestBody List<String> symptoms) {
         return extendedDao.findConditionsBySymptom(symptoms);
     }
 }

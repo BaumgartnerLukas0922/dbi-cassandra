@@ -21,7 +21,7 @@ public class QueryConditionDao {
     @Inject
     ConditionDao dao;
 
-    public List<Condition> findConditionById(Long id) {
+    public Condition findConditionById(Long id) {
         List<Condition> result = new ArrayList<>();
         PreparedStatement query = cqlSession.prepare(
                 "SELECT * FROM dbi.condition WHERE id = :id");
@@ -32,7 +32,7 @@ public class QueryConditionDao {
                 .id(c.getLong("id"))
                 .build())
         );
-        return result;
+        return result.get(0);
     }
 
     public List<ConditionSymptomDto> findConditionsBySymptom(List<String> symptoms) {
@@ -53,9 +53,9 @@ public class QueryConditionDao {
             if(symptomCount > 0){
                 result.add(ConditionSymptomDto
                         .builder()
-                        .conditionName(cond.getConditionName())
+                        .name(cond.getConditionName())
                                 .id(cond.getId())
-                                .symptomCount(symptomCount)
+                                .symptomsCount(symptomCount)
                         .build());
             }
         }

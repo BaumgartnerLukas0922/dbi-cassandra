@@ -17,7 +17,7 @@ public class QueryStationDao {
     @Inject
     CqlSession cqlSession;
 
-    public List<Station> findStationById(Long stationId) {
+    public Station findStationById(Long stationId) {
         List<Station> result = new ArrayList<>();
         PreparedStatement query = cqlSession.prepare(
                 "SELECT * FROM dbi.station WHERE id = :id");
@@ -28,6 +28,6 @@ public class QueryStationDao {
                 .id(c.getLong("id")).name(c.getString("name"))
                 .build())
         );
-        return result;
+        return result.get(0);
     }
 }

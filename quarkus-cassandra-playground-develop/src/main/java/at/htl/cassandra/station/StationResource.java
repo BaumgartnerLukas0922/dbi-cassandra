@@ -31,7 +31,7 @@ public class StationResource {
 
     @GET
     @Path("getById")
-    public List<Station> getStationById(@QueryParam("id") Long stationId) {
+    public Station getStationById(@QueryParam("id") Long stationId) {
         return extendedDao.findStationById(stationId);
     }
 
