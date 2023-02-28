@@ -22,13 +22,13 @@ export class PatientDetailsComponent implements OnInit {
   stations: Station[] = []
 
   patient: Patient = {
-    id: "", 
-    firstName: "", 
-    height: 0,  
-    currentlyInHospital: false, 
-    diagnosed: false, 
-    lastName: "", 
-    ssn: "", 
+    id: "",
+    firstName: "",
+    height: 0,
+    currentlyInHospital: false,
+    diagnosed: false,
+    lastName: "",
+    ssn: "",
     weight: 0,
     dob: ""
 }
@@ -76,6 +76,7 @@ export class PatientDetailsComponent implements OnInit {
           this.stationService.getStationById(this.patient.stationId!).subscribe(
             {
               next: res => {
+                console.log(res.name + res.id)
                 this.station = res;
 
                 this.stationService.getAmountOnStation(this.patient.stationId!).subscribe({

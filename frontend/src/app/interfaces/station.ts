@@ -1,5 +1,6 @@
 export interface Station {
-    id: string
+    id: string,
+  totalNumberOfBeds: number
     name:string,
-    totalNumberOfBeds: number
+
 }

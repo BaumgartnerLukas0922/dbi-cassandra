@@ -3,7 +3,6 @@
     <hr>
     <h5>Firstname: {{patient.firstName}}</h5>
     <h5>Lastname: {{patient.lastName}}</h5>
-    <h5>Birthdate: {{patient.dob | date:'longDate'}}</h5>
 
     <br>
     <h5>Height: {{patient.height}} cm</h5>
@@ -11,13 +10,13 @@
 
 
     <hr>
-    <div *ngIf="patient.stationId != '000000000000000000000000'">
+    <div *ngIf="patient.stationId != '0'">
         <h5 >Stationid: {{patient.stationId}}</h5>
         <h5 >Station Name: {{station.name}}</h5>
         <h5 >Number of available Beds: {{station.totalNumberOfBeds-numberOfBeds}} / {{station.totalNumberOfBeds}}</h5>
         <img src="assets/svg/{{station.name}}.svg" class="rounded mx-auto d-block">
     </div>
-    <h5 *ngIf="patient.stationId == '000000000000000000000000'">Patient is currently not on a station</h5>
+    <h5 *ngIf="patient.stationId == '0'">Patient is currently not on a station</h5>
 
     <hr>
     <h3>Medical History: {{diagnosises.length}}</h3>
@@ -37,8 +36,8 @@
             </tr>
         </tbody>
     </table>
-    
-    
+
+
     <hr>
 
     <ng-container *ngIf="admitClicked">

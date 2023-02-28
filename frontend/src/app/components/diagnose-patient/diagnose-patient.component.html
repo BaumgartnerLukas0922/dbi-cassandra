@@ -20,8 +20,8 @@
                 </tr>
             </thead>
             <tbody>
-                
-                   
+
+
                     <tr *ngFor="let symptom of symptoms">
                         <td>{{symptom}}</td>
                         <td><button class="btn btn-outline-dark" (click)="deleteSymptom(symptom)">Delete</button></td>
@@ -41,12 +41,12 @@
                 </tr>
             </thead>
             <tbody>
-                
-                   
+
+
                     <tr *ngFor="let condition of conditionsBySymptoms">
                         <td>{{condition.name}}</td>
                         <td>{{condition.symptomsCount}}</td>
-                        <td>   
+                        <td>
                             <input type="radio" name="radiogroup" [checked]="idx === 0" [value]="condition.id"
                             (change)="onSelectionChange(condition)">
                         </td>
@@ -56,7 +56,7 @@
         <button class="btn btn-outline-dark" (click)="diagnosePatient()">Diagnose Patient</button>
         <div class="row g-3 m-1">
             <div class="col-2">
-                <label for="station" class="col-form-label">Station: </label>
+                <label for="station" class="col-form-label">Staff: </label>
             </div>
             <div class="col-4">
                 <select class="form-select" id="medicalStaff" name="medicaStaff" [(ngModel)]="selectedStaff.id">
