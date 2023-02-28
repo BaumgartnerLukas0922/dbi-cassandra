@@ -12,6 +12,7 @@ export class ConditionService {
   constructor(private http: HttpClient) { }
 
   getConditions(){
+    console.log("test")
     return this.http.get<Condition[]>(environment.host+"Condition/getAll");
   }
 

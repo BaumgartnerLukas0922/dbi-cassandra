@@ -37,9 +37,8 @@ export class DiagnosisDetailsComponent implements OnInit {
   }
   Condition: Condition = {
     id: '',
-    name: '',
-    description: '',
-    symptoms: []
+    conditionName: '',
+    description: ''
   }
   Patient: Patient = {
     id: '',
@@ -95,7 +94,7 @@ export class DiagnosisDetailsComponent implements OnInit {
       )
 
   }
-  
+
 }
 
 }

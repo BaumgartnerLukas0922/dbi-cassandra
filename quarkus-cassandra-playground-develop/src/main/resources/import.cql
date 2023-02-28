@@ -30,6 +30,18 @@ values (5,3,'Chills');
 insert into symptom (id, condition_id, symptom_name)
 values (6,3,'Fever');
 
+insert into symptom (id, condition_id, symptom_name)
+values (7,1,'Red color');
+
+insert into symptom (id, condition_id, symptom_name)
+values (8,1,'Pain when swallowing');
+
+insert into symptom (id, condition_id, symptom_name)
+values (6,3,'Fever');
+
+
+
+
 insert into station (id, name, total_number_of_beds)
 values (1,'Intensive Care', 20);
 
