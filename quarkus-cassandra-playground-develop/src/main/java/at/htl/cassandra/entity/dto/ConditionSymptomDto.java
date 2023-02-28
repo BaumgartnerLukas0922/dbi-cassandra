@@ -5,8 +5,13 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ConditionSymptomDto {
+public class ConditionSymptomDto implements Comparable<ConditionSymptomDto>{
     private Long id;
     private String conditionName;
     private int symptomCount;
+
+    @Override
+    public int compareTo(ConditionSymptomDto conditionSymptomDto) {
+        return Integer.compare(this.symptomCount, conditionSymptomDto.symptomCount);
+    }
 }
