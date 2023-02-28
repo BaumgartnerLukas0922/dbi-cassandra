@@ -1,6 +1,6 @@
 export interface Condition {
     id: string,
-    name: string,
+    conditionName: string,
     description: string,
-    symptoms: string[]
+    //symptoms: string[]
 }

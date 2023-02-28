@@ -18,10 +18,14 @@ export class AllConditionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log("test")
     this.conditionService.getConditions().subscribe({
       next: (res)=>{
+        console.log("test")
+        console.log(res)
         this.conditions = res
       }
+
     })
   }
 

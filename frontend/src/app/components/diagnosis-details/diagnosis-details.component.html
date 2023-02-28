@@ -5,10 +5,6 @@
     <h5>Diagnosed by: Dr. {{MedicalStaff.lastName}} {{MedicalStaff.firstName}}</h5>
     <h5>Diagnosed on: {{Diagnosis.diagnosedOn | date:'longDate'}}</h5>
     <hr>
-    <h5>Diagnosed with: {{Condition.name}}</h5>
+    <h5>Diagnosed with: {{Condition.conditionName}}</h5>
     <hr>
-    <h5>Symptoms</h5>
-    <ul>
-        <li *ngFor="let symptom of Condition.symptoms">{{symptom}}</li>
-    </ul>
 </div>
