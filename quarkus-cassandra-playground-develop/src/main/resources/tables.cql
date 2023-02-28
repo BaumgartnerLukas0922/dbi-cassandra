@@ -24,4 +24,16 @@ create table dbi.station
     id                   bigint primary key,
     name                 text,
     total_number_of_beds int
-)
+);
+
+create table dbi.patient
+(
+    id                       bigint primary key,
+    dob                      date,
+    first_name               text,
+    height                   double,
+    is_currently_in_hospital boolean,
+    last_name                text,
+    station_id               bigint,
+    weight                   double
+);
