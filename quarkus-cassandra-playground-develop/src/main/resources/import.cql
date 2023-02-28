@@ -46,5 +46,17 @@ insert into dbi.station (id, name, total_number_of_beds)
 values (5,'Radiology', 12);
 
 insert into dbi.patient (id, first_name, height, currently_in_hospital, diagnosed, last_name, ssn, station_id,
-                     weight)
+                         weight)
 values (1 , 'John', 170, false,false, 'Smith','1111111111', 2, 70);
+
+insert into dbi.medical_staff (id, first_name, last_name, station_id, hire_date, salary, dob, staff_designation)
+values (1, 'John', 'Smith', 1, '2017-01-01', 4500, '1990-01-01', 'D');
+
+insert into dbi.medical_staff (id, first_name, last_name, station_id, hire_date, salary, dob, staff_designation)
+values (2, 'Jane', 'Doe', 1, '2017-01-01', 5000, '1990-01-01', 'D');
+
+insert into dbi.medical_staff (id, first_name, last_name, station_id, hire_date, salary, dob, staff_designation)
+values (3, 'John', 'Doe', 2, '2017-01-01', 2300, '1990-01-01', 'N');
+
+insert into dbi.medical_staff (id, first_name, last_name, station_id, hire_date, salary, dob, staff_designation)
+values (4, 'Jane', 'Smith', 2, '2017-01-01', 4200, '1990-01-01', 'O');

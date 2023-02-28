@@ -38,3 +38,15 @@ create table dbi.patient
     ssn                      varchar,
     diagnosed              boolean
 );
+
+create table dbi.medical_staff
+(
+    id                       bigint primary key,
+    first_name               text,
+    last_name                text,
+    station_id               bigint,
+    dob                      text,
+    hire_date                text,
+    salary                   float,
+    staff_designation        text
+);
