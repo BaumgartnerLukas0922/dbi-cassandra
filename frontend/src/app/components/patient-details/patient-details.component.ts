@@ -72,12 +72,13 @@ export class PatientDetailsComponent implements OnInit {
       {
         next: res => {
           this.patient = res;
+          this.station = this.stations.find(s => s.id == this.patient.id)!
           this.stationService.getStationById(this.patient.stationId!).subscribe(
             {
               next: res => {
                 this.station = res;
 
-                this.stationService.getAmountOnStation(this.station.id).subscribe({
+                this.stationService.getAmountOnStation(this.patient.stationId!).subscribe({
                   next: res => {
                     this.numberOfBeds = res;
                   }
