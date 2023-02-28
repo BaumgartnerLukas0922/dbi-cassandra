@@ -35,8 +35,8 @@ public class QueryPatientDao {
                 .stationId(c.getLong("station_id"))
                 .height(c.getDouble("height"))
                 .weight(c.getDouble("weight"))
-                .isCurrentlyInHospital(c.getBoolean("currently_in_hospital"))
-                .isDiagnosed(c.getBoolean("diagnosed"))
+                .currentlyInHospital(c.getBoolean("currently_in_hospital"))
+                .diagnosed(c.getBoolean("diagnosed"))
                 .build())
         );
         return result;
@@ -73,8 +73,8 @@ public class QueryPatientDao {
                 .stationId(c.getLong("station_id"))
                 .height(c.getDouble("height"))
                 .weight(c.getDouble("weight"))
-                .isCurrentlyInHospital(c.getBoolean("currently_in_hospital"))
-                .isDiagnosed(c.getBoolean("diagnosed"))
+                .currentlyInHospital(c.getBoolean("currently_in_hospital"))
+                .diagnosed(c.getBoolean("diagnosed"))
                 .build())
         );
         return result;
@@ -89,8 +89,8 @@ public class QueryPatientDao {
                         .ssn(patientDto.getSsn())
                         .height(patientDto.getHeight())
                         .weight(patientDto.getWeight())
-                        .isCurrentlyInHospital(true)
-                        .isDiagnosed(patientDto.isDiagnosed())
+                        .currentlyInHospital(true)
+                        .diagnosed(patientDto.isDiagnosed())
                         .build()
         );
     }
