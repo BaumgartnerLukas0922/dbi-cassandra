@@ -18,3 +18,10 @@ create table dbi.symptom
     condition_id bigint,
     symptom_name varchar
 );
+
+create table dbi.station
+(
+    id                   bigint primary key,
+    name                 text,
+    total_number_of_beds int
+)
