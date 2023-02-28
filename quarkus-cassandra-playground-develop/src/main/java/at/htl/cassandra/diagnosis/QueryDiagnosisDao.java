@@ -1,5 +1,6 @@
 package at.htl.cassandra.diagnosis;
 
+import at.htl.cassandra.condition.ConditionDao;
 import at.htl.cassandra.entity.Diagnosis;
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.BoundStatement;
@@ -16,14 +17,17 @@ public class QueryDiagnosisDao {
     @Inject
     CqlSession cqlSession;
 
+    @Inject
+    ConditionDao dao;
+
     public List<Diagnosis> findDiagnosisById(Long id) {
         List<Diagnosis> result = new ArrayList<>();
         PreparedStatement query = cqlSession.prepare(
-                "SELECT * FROM dbi.condition WHERE id = :id");
+                "SELECT * FROM dbi.diagnosis WHERE id = :id");
         BoundStatement completeStatement = query.bind().setLong("id", id);
         ResultSet resultSet = cqlSession.execute(completeStatement);
         resultSet.all().forEach(c -> result.add(Diagnosis.builder()
-                .conditionName(c.getString("condition_name"))
+                .daysInHospital(c.getInt("daysInHospital"))
                 .id(c.getLong("id"))
                 .build())
         );
