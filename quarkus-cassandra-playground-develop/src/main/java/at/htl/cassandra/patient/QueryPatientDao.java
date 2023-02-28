@@ -2,7 +2,6 @@ package at.htl.cassandra.patient;
 
 import at.htl.cassandra.entity.Patient;
 import at.htl.cassandra.entity.Station;
-import at.htl.cassandra.entity.dto.PatientDto;
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.BoundStatement;
 import com.datastax.oss.driver.api.core.cql.PreparedStatement;
@@ -18,88 +17,85 @@ public class QueryPatientDao {
     @Inject
     CqlSession cqlSession;
 
-    @Inject
-    PatientDao dao;
-
-    public List<Patient> findPatientById(Long patientId) {
-        List<Patient> result = new ArrayList<>();
-        PreparedStatement query = cqlSession.prepare(
-                "SELECT * FROM dbi.patient WHERE id = :id");
-        BoundStatement completeStatement = query.bind().setLong("id", patientId);
-        ResultSet resultSet = cqlSession.execute(completeStatement);
-        resultSet.all().forEach(c -> result.add(Patient.builder()
-                .id(c.getLong("id"))
-                .firstName(c.getString("first_name"))
-                .lastName(c.getString("last_name"))
-                .ssn(c.getString("ssn"))
-                .stationId(c.getLong("station_id"))
-                .height(c.getDouble("height"))
-                .weight(c.getDouble("weight"))
-                .currentlyInHospital(c.getBoolean("currently_in_hospital"))
-                .diagnosed(c.getBoolean("diagnosed"))
-                .build())
-        );
-        return result;
-    }
-
     public boolean checkSSN(String ssn){
         if (ssn.length() != 10)
             return false;
 
-        int checkNumber = ssn.charAt(3)-'0';
-        int[] checkArray = new int[] { 3,7,9, 0, 5, 8, 4, 2, 1, 6 };
+        int checkNumber = ssn.charAt(3) - '0';
+        int[] checkArray = new int[]{3, 7, 9, 0, 5, 8, 4, 2, 1, 6};
         int checkSum = 0;
 
-        for(int i =0; i < checkArray.length; i++)
-        {
+        for (int i = 0; i < checkArray.length; i++) {
             int actNumber = ssn.charAt(i) - '0';
             checkSum += actNumber * checkArray[i];
         }
-
-        return checkSum % 11 ==  checkNumber;
+        if(checkSum % 11 == checkNumber){
+            return true;
+        }
+        return false;
     }
 
-    public List<Patient> getAllByStation(long stationId) {
+    public List<Patient> findPatientById(Long stationId) {
         List<Patient> result = new ArrayList<>();
         PreparedStatement query = cqlSession.prepare(
-                "SELECT * FROM dbi.patient WHERE station_id = :id ALLOW FILTERING");
+                "SELECT * FROM dbi.patient WHERE id = :id");
         BoundStatement completeStatement = query.bind().setLong("id", stationId);
         ResultSet resultSet = cqlSession.execute(completeStatement);
-        resultSet.all().forEach(c -> result.add(Patient.builder()
-                .id(c.getLong("id"))
-                .firstName(c.getString("first_name"))
-                .lastName(c.getString("last_name"))
-                .ssn(c.getString("ssn"))
-                .stationId(c.getLong("station_id"))
-                .height(c.getDouble("height"))
-                .weight(c.getDouble("weight"))
-                .currentlyInHospital(c.getBoolean("currently_in_hospital"))
+        resultSet.all().forEach(c -> result.add(Patient.builder().stationId(c.getLong("station_id"))
+                .id(c.getLong("id")).firstName(c.getString("first_name"))
+                .lastName(c.getString("last_name")).ssn(c.getString("ssn")).weight(c.getDouble("weight"))
+                .height(c.getDouble("height")).currentlyInHospital(c.getBoolean("currently_in_hospital"))
                 .diagnosed(c.getBoolean("diagnosed"))
                 .build())
         );
         return result;
     }
 
-    public void save(PatientDto patientDto) {
-        dao.update(
-                Patient.builder()
-                        .id(Long.valueOf(patientDto.getId()))
-                        .firstName(patientDto.getFirstName())
-                        .lastName(patientDto.getLastName())
-                        .ssn(patientDto.getSsn())
-                        .height(patientDto.getHeight())
-                        .weight(patientDto.getWeight())
-                        .currentlyInHospital(true)
-                        .diagnosed(patientDto.isDiagnosed())
-                        .build()
+    public List<Patient> findPatientByStation(Long stationId) {
+        List<Patient> result = new ArrayList<>();
+        PreparedStatement query = cqlSession.prepare(
+                "SELECT * FROM dbi.patient WHERE station_id = :station_id ALLOW FILTERING");
+        BoundStatement completeStatement = query.bind().setLong("station_id", stationId);
+        ResultSet resultSet = cqlSession.execute(completeStatement);
+        resultSet.all().forEach(c -> result.add(Patient.builder().stationId(c.getLong("station_id"))
+                .id(c.getLong("id")).firstName(c.getString("first_name"))
+                .lastName(c.getString("last_name")).ssn(c.getString("ssn")).weight(c.getDouble("weight"))
+                .height(c.getDouble("height")).currentlyInHospital(c.getBoolean("currently_in_hospital"))
+                        .diagnosed(c.getBoolean("diagnosed"))
+                .build())
         );
+        return result;
     }
 
-    public void assignStation(Patient patient) {
-        dao.update(patient);
+    public List<Patient> findPatientByLastName(String ln) {
+        List<Patient> result = new ArrayList<>();
+        PreparedStatement query = cqlSession.prepare(
+                "SELECT * FROM dbi.patient WHERE last_name = :ln ALLOW FILTERING");
+        BoundStatement completeStatement = query.bind().setString("ln", ln);
+        ResultSet resultSet = cqlSession.execute(completeStatement);
+        resultSet.all().forEach(c -> result.add(Patient.builder().stationId(c.getLong("station_id"))
+                .id(c.getLong("id")).firstName(c.getString("first_name"))
+                .lastName(c.getString("last_name")).ssn(c.getString("ssn")).weight(c.getDouble("weight"))
+                .height(c.getDouble("height")).currentlyInHospital(c.getBoolean("currently_in_hospital"))
+                .diagnosed(c.getBoolean("diagnosed"))
+                .build())
+        );
+        return result;
     }
 
-    public void releasePatient(Patient patient) {
-        dao.update(patient);
+    public List<Patient> findPatientBySsn(String ssn) {
+        List<Patient> result = new ArrayList<>();
+        PreparedStatement query = cqlSession.prepare(
+                "SELECT * FROM dbi.patient WHERE ssn = :ssn ALLOW FILTERING");
+        BoundStatement completeStatement = query.bind().setString("ssn", ssn);
+        ResultSet resultSet = cqlSession.execute(completeStatement);
+        resultSet.all().forEach(c -> result.add(Patient.builder().stationId(c.getLong("station_id"))
+                .id(c.getLong("id")).firstName(c.getString("first_name"))
+                .lastName(c.getString("last_name")).ssn(c.getString("ssn")).weight(c.getDouble("weight"))
+                .height(c.getDouble("height")).currentlyInHospital(c.getBoolean("currently_in_hospital"))
+                .diagnosed(c.getBoolean("diagnosed"))
+                .build())
+        );
+        return result;
     }
 }

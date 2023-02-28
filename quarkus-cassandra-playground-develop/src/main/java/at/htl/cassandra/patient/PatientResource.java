@@ -2,17 +2,19 @@ package at.htl.cassandra.patient;
 
 import at.htl.cassandra.entity.Patient;
 import at.htl.cassandra.entity.Station;
-import at.htl.cassandra.entity.dto.PatientDto;
+import at.htl.cassandra.entity.dto.PatientWithStationDTO;
 import at.htl.cassandra.station.QueryStationDao;
 import at.htl.cassandra.station.StationDao;
-import io.quarkus.logging.Log;
+import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Path("/Patient")
 @Produces(MediaType.APPLICATION_JSON)
@@ -20,10 +22,8 @@ import java.util.List;
 public class PatientResource {
     @Inject
     PatientDao dao;
-
     @Inject
-    QueryStationDao extendedStationDao;
-
+    StationDao stationDao;
     @Inject
     QueryPatientDao extendedDao;
 
@@ -33,55 +33,94 @@ public class PatientResource {
         return dao.findAll().all();
     }
 
+    @GET
+    @Path("getShortPatient")
+    public List<PatientWithStationDTO> getShortPatients(){
+        List<Patient> patients = dao.findAll().all();
+        List<PatientWithStationDTO> shortPatients = new LinkedList<>();
+        for (Patient patient:patients) {
+            shortPatients.add(new PatientWithStationDTO(
+                    patient.getId(),
+                    patient.getSsn(),
+                    patient.getFirstName(),
+                    patient.getLastName(),
+                    stationDao.findAll().all()
+                            .stream()
+                            .filter(
+                                    s -> s.getId() == patient.getStationId()
+                            ).findFirst().get().getName())
+            );
+        }
+        return shortPatients;
+    }
+
+    @GET
+    @Path("getAllDiagnosed")
+    public List<Patient> GetAllPatientsDiagnosed(@QueryParam("filter") boolean filter){
+        return dao.findAll().all().stream().filter(p -> p.isDiagnosed() == filter).collect(Collectors.toList());
+    }
+
+    @GET
     @Path("getById")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Patient> getPatientById(@QueryParam("id") String id){
-        Long tempId = Long.parseLong(id);
-        return extendedDao.findPatientById(tempId);
+    public Patient GetById(@QueryParam("id") Long id){
+        return extendedDao.findPatientById(id).stream().findFirst().get();
     }
-    @Path("create")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
-    public Response addPatient(PatientDto patientDto){
-        extendedDao.save(patientDto);
-        return Response.ok().build();
-    }
-    @Path("checkSsn")
+
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Boolean checkSSN(@QueryParam("ssn") String ssn) throws Exception {
+    @Path("getByStation")
+    public List<Patient> GetPatientByStation(@QueryParam("stationId") Long id){
+        return extendedDao.findPatientByStation(id);
+    }
+    @GET
+    @Path("getByLastName")
+    public List<Patient> GetPatientByLastName(@QueryParam("lastName") String lastName){
+        return extendedDao.findPatientByLastName(lastName);
+    }
+
+    @GET
+    @Path("getBySSN")
+    public List<Patient> GetPatientBySSN(@QueryParam("ssn") String ssn){
+        return extendedDao.findPatientBySsn(ssn);
+    }
+
+    @GET
+    @Path("checkSSN")
+    public boolean CheckSsn(@QueryParam("ssn") String ssn){
+        if(ssn.equals("")){
+            return false;
+        }
         return extendedDao.checkSSN(ssn);
     }
 
+    @POST
+    @Path("create")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response CreateNewPatient(Patient patient){
+        dao.update(patient);
+        return Response.ok().build();
+    }
+
+    @POST
     @Path("assignStation")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
-    public Response assignStation(@QueryParam("patientId") String patientId, @QueryParam("stationId") String stationId){
-        Patient patient = extendedDao.findPatientById(Long.parseLong(patientId)).get(0);
-        patient.setStationId(Long.parseLong(stationId));
-        extendedDao.assignStation(patient);
-        return Response.ok().build();
+    public Response AssignToStation(@QueryParam("patientId") Long patientId, @QueryParam("stationId") Long stationId){
+
+        Patient patient = dao.findAll().all().stream().filter(p -> Objects.equals(p.getId(), patientId)).findFirst().get();
+
+        patient.setStationId(stationId);
+
+        dao.update(patient);
+
+        return Response.ok(patient).build();
     }
 
+    @POST
     @Path("releasePatient")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
-    public Response releasePatient(@QueryParam("patientId") String patientId){
-        Patient patient = extendedDao.findPatientById(Long.parseLong(patientId)).get(0);
+    public Response ReleasePatient(@QueryParam("patientId") Long patientId){
+        Patient patient = dao.findAll().all().stream().filter(p -> Objects.equals(p.getId(), patientId)).findFirst().get();
         patient.setCurrentlyInHospital(false);
-        patient.setStationId(null);
-        extendedDao.releasePatient(patient);
-        return Response.ok().build();
-    }
-
-    @Path("getByStation")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Patient> getPatientsByStation(@QueryParam("stationId") String stationId) throws Exception {
-        return extendedDao.getAllByStation(Long.parseLong(stationId));
+        patient.setDiagnosed(false);
+        patient.setStationId(000000000000000000000000l);
+        dao.update(patient);
+        return Response.ok(patient).build();
     }
 }
