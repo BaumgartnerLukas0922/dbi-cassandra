@@ -1,5 +1,6 @@
 package at.htl.cassandra.entity;
 
+import com.datastax.oss.driver.api.mapper.annotations.ClusteringColumn;
 import com.datastax.oss.driver.api.mapper.annotations.Entity;
 import com.datastax.oss.driver.api.mapper.annotations.PartitionKey;
 import com.datastax.oss.driver.api.mapper.annotations.PropertyStrategy;
@@ -20,13 +21,11 @@ public class Diagnosis {
 
     public int daysInHospital;
 
+    @ClusteringColumn
     public LocalDateTime diagnosedOn;
-
-    private String conditionName;
-    private String description;
 
     public Condition condition;
 
-    public Customer customer;
+    public Patient patient;
 
 }

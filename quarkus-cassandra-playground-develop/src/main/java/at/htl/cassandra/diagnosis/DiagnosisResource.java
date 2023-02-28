@@ -7,6 +7,7 @@ import at.htl.cassandra.entity.dto.ConditionSymptomDto;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/Diagnosis")
@@ -24,5 +25,33 @@ public class DiagnosisResource {
     public List<Diagnosis> getAllDiagnosis() {
         return dao.findAll().all();
     }
+
+    @GET
+    @Path("getById")
+    public List<Diagnosis> getById(@QueryParam("id") Long diagnosisId) {
+        return extendedDao.findDiagnosisById(diagnosisId);
+    }
+
+
+    @GET
+    @Path("getForPatient")
+    public List<Diagnosis> getDiagnosisByPatient(@QueryParam("id") Long patientId) {
+        return extendedDao.findDiagnosisByPatient(patientId);
+    }
+
+
+    @DELETE
+    public boolean deleteDiagnosis(@QueryParam("id") Long diagnosisId){
+        return extendedDao.deleteDiagnosis(diagnosisId);
+    }
+
+    /*
+    @POST
+    @Path("create")
+    public Response deleteDiagnosis(){
+        return null;
+    }
+*/
+     
 
 }
