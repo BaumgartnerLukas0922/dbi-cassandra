@@ -32,25 +32,26 @@ public class DiagnosisResource {
         return extendedDao.findDiagnosisById(diagnosisId);
     }
 
-    /*
+
     @GET
     @Path("getForPatient")
-    public List<Condition> getPagedCustomersByCustomerNumber(@QueryParam("id") Long conditionId) {
-        return extendedDao.findConditionById(conditionId);
+    public List<Diagnosis> getDiagnosisByPatient(@QueryParam("id") Long patientId) {
+        return extendedDao.findDiagnosisByPatient(patientId);
     }
 
 
     @DELETE
-    public Response deleteDiagnosis(){
-        return null;
+    public boolean deleteDiagnosis(@QueryParam("id") Long diagnosisId){
+        return extendedDao.deleteDiagnosis(diagnosisId);
     }
 
+    /*
     @POST
     @Path("create")
     public Response deleteDiagnosis(){
         return null;
     }
-    */
+*/
      
 
 }

@@ -9,6 +9,7 @@ import com.datastax.oss.driver.api.core.cql.ResultSet;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 @ApplicationScoped
@@ -34,20 +35,32 @@ public class QueryDiagnosisDao {
         return result;
     }
 
-/*
-    public List<ConditionSymptomDto> findConditionsBySymptom(List<String> symptoms) {
-        List<ConditionSymptomDto> result = new ArrayList<>();
+    public List<Diagnosis> findDiagnosisByPatient(Long id) {
+        List<Diagnosis> result = new ArrayList<>();
         PreparedStatement query = cqlSession.prepare(
-                "SELECT Count(*) FROM dbi.symptom WHERE symptom_name = :symptoms ALLOW FILTERING");
-        BoundStatement completeStatement = query.bind().setString("symptoms", "Fever");
+                "SELECT * FROM dbi.diagnosis.patient WHERE id = :id");
+        BoundStatement completeStatement = query.bind().setLong("id", id);
         ResultSet resultSet = cqlSession.execute(completeStatement);
-        resultSet.all().forEach(c -> result.add(ConditionSymptomDto.builder()
-                .conditionName("")
-                .symptomCount(Integer.parseInt(String.valueOf(c.getLong(0))))
+        resultSet.all().forEach(c -> result.add(Diagnosis.builder()
+                .daysInHospital(c.getInt("daysInHospital"))
+                .id(c.getLong("id"))
                 .build())
         );
         return result;
     }
 
- */
+
+    public boolean deleteDiagnosis(Long id) {
+        List<Diagnosis> result = new ArrayList<>();
+        PreparedStatement query = cqlSession.prepare(
+                "DELETE FROM dbi.diagnosis WHERE id = :id");
+        BoundStatement completeStatement = query.bind().setLong("id", id);
+        ResultSet resultSet = cqlSession.execute(completeStatement);
+        resultSet.all().forEach(c -> result.add(Diagnosis.builder()
+                .daysInHospital(c.getInt("daysInHospital"))
+                .id(c.getLong("id"))
+                .build())
+        );
+        return true;
+    }
 }
