@@ -32,3 +32,6 @@ values (6,3,'Fever');
 
 insert into station (id, name, total_number_of_beds)
 values (1,'Intensive Care', 20);
+
+insert into station (id, name, total_number_of_beds)
+values (2,'Nursery', 15);
