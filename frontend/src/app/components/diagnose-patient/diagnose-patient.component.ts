@@ -49,13 +49,13 @@ export class DiagnosePatientComponent implements OnInit {
 
 
   patient: Patient = {
-    id: "", 
-    firstName: "", 
-    height: 0,  
-    currentlyInHospital: false, 
-    diagnosed: false, 
-    lastName: "", 
-    ssn: "", 
+    id: "",
+    firstName: "",
+    height: 0,
+    currentlyInHospital: false,
+    diagnosed: false,
+    lastName: "",
+    ssn: "",
     weight: 0,
     dob: ""
 }
@@ -85,7 +85,7 @@ export class DiagnosePatientComponent implements OnInit {
         {
           next: res => {
             res.forEach(element => {
-              if(element.staffDesignation == '0'){
+              if(element.staffDesignation == 'D'){
                 this.medicalStaff.push(element);
               }
             });
@@ -96,7 +96,7 @@ export class DiagnosePatientComponent implements OnInit {
     else{
       this.router.navigate(['/home'])
     }
-    
+
   }
 
   selectedEntry: any;
@@ -144,7 +144,7 @@ export class DiagnosePatientComponent implements OnInit {
       }
     })
 
-    
+
 
   }
 
