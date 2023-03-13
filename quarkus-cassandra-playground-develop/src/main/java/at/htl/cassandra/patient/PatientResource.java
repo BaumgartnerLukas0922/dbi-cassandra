@@ -98,7 +98,7 @@ public class PatientResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response CreateNewPatient(Patient patient){
         Random rand = new Random();
-        patient.setId(Math.abs(rand.nextLong()));
+        patient.setId(Math.abs(rand.nextLong())%100);
         dao.update(patient);
         return Response.ok().build();
     }
