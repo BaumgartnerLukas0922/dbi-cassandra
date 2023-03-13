@@ -21,7 +21,6 @@ public class Diagnosis {
 
     public int daysInHospital;
 
-    @ClusteringColumn
     public LocalDateTime diagnosedOn;
 
     public Condition condition;

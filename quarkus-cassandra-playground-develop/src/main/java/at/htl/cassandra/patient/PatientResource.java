@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Path("/Patient")
@@ -68,7 +69,7 @@ public class PatientResource {
 
     @GET
     @Path("getByStation")
-    public List<Patient> GetPatientByStation(@QueryParam("stationId") Long id){
+    public List<Patient> GetPatientByStation(@QueryParam("id") Long id){
         return extendedDao.findPatientByStation(id);
     }
     @GET
@@ -84,7 +85,7 @@ public class PatientResource {
     }
 
     @GET
-    @Path("checkSSN")
+    @Path("checkSsn")
     public boolean CheckSsn(@QueryParam("ssn") String ssn){
         if(ssn.equals("")){
             return false;
@@ -96,6 +97,8 @@ public class PatientResource {
     @Path("create")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response CreateNewPatient(Patient patient){
+        Random rand = new Random();
+        patient.setId(Math.abs(rand.nextLong()));
         dao.update(patient);
         return Response.ok().build();
     }
@@ -107,7 +110,7 @@ public class PatientResource {
         Patient patient = dao.findAll().all().stream().filter(p -> Objects.equals(p.getId(), patientId)).findFirst().get();
 
         patient.setStationId(stationId);
-
+        patient.setCurrentlyInHospital(true);
         dao.update(patient);
 
         return Response.ok(patient).build();
@@ -115,7 +118,7 @@ public class PatientResource {
 
     @POST
     @Path("releasePatient")
-    public Response ReleasePatient(@QueryParam("patientId") Long patientId){
+    public Response ReleasePatient(@QueryParam("id") Long patientId){
         Patient patient = dao.findAll().all().stream().filter(p -> Objects.equals(p.getId(), patientId)).findFirst().get();
         patient.setCurrentlyInHospital(false);
         patient.setDiagnosed(false);
