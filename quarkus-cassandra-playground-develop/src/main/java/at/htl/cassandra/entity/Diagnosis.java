@@ -17,14 +17,14 @@ public class Diagnosis {
     @PartitionKey
     private Long id;
 
-    //public MedicalStaff medicalStaff;
+    public Long medicalStaffId;
 
     public int daysInHospital;
 
     public LocalDateTime diagnosedOn;
 
-    public Condition condition;
+    public Long conditionId;
 
-    public Patient patient;
+    public Long patientId;
 
 }

@@ -60,3 +60,15 @@ values (3, 'John', 'Doe', 2, '2017-01-01', 2300, '1990-01-01', 'N');
 
 insert into dbi.medical_staff (id, first_name, last_name, station_id, hire_date, salary, dob, staff_designation)
 values (4, 'Jane', 'Smith', 2, '2017-01-01', 4200, '1990-01-01', 'O');
+
+insert into dbi.diagnosis (id, medical_staff_id, days_in_hospital, diagnosed_on, condition_id, patient_id)
+values (1, 1, 5, '202023-01-07', 1, 1);
+
+insert into dbi.diagnosis (id, medical_staff_id, days_in_hospital, diagnosed_on, condition_id, patient_id)
+values (2, 2, 2, '202023-01-05', 3, 2);
+
+insert into dbi.diagnosis (id, medical_staff_id, days_in_hospital, diagnosed_on, condition_id, patient_id)
+values (3, 3, 1, '202023-01-01', 2, 3);
+
+insert into dbi.diagnosis (id, medical_staff_id, days_in_hospital, diagnosed_on, condition_id, patient_id)
+values (4, 1, 7, '202023-01-06', 1, 1);
