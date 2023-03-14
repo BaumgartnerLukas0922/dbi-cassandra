@@ -1,10 +1,7 @@
 package at.htl.cassandra.diagnosis;
 
-import at.htl.cassandra.condition.ConditionDao;
-import at.htl.cassandra.entity.Condition;
+
 import at.htl.cassandra.entity.Diagnosis;
-import at.htl.cassandra.entity.Symptom;
-import at.htl.cassandra.entity.dto.ConditionSymptomDto;
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.BoundStatement;
 import com.datastax.oss.driver.api.core.cql.PreparedStatement;
@@ -62,23 +59,22 @@ public class QueryDiagnosisDao {
     }*/
 
 
-    public List<Diagnosis> getDiagnosisByPatient(Long id){
+    public List<Diagnosis> getDiagnosisByPatient(Long patientId){
         List<Diagnosis> result = new ArrayList<>();
         PreparedStatement query = cqlSession.prepare(
-                "SELECT * FROM dbi.diagnosis WHERE patient_id = :id");
-        BoundStatement completeStatement = query.bind().setLong("id", id);
+                "SELECT * FROM dbi.diagnosis WHERE patient_id = :id ALLOW FILTERING");
+        BoundStatement completeStatement = query.bind().setLong("id", patientId);
         ResultSet resultSet = cqlSession.execute(completeStatement);
         resultSet.all().forEach(c -> result.add(Diagnosis.builder()
-                .daysInHospital(c.getInt("days_in_hospital"))
-                //.patientId(c.getLong("patient_id"))
-                .diagnosedOn(LocalDateTime.parse(c.getString("diagnosed_on")))
-                //.conditionId(c.getLong("condition_id"))
-                //.medicalStaffId(c.getLong("medical_staff_id"))
                 .id(c.getLong("id"))
+                .conditionId(c.getLong("condition_id"))
+                .daysInHospital(c.getInt("days_in_hospital"))
+                .diagnosedOn(LocalDateTime.now())
+                .medicalStaffId(c.getLong("medical_staff_id"))
+                .patientId(c.getLong("patient_id"))
                 .build())
         );
         return result;
     }
-
 
 }

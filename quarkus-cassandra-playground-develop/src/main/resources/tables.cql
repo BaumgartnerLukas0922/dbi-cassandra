@@ -9,7 +9,7 @@ create table dbi.diagnosis
 (
     id                  bigint primary key,
     medical_staff_id    bigint,
-    days_in_hospital    bigint,
+    days_in_hospital    int,
     diagnosed_on        text,
     condition_id        bigint,
     patient_id          bigint
