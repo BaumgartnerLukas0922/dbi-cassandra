@@ -28,7 +28,7 @@ public class DiagnosisResource {
 
     @GET
     @Path("getById")
-    public List<Diagnosis> getById(@QueryParam("id") Long diagnosisId) {
+    public Diagnosis getById(@QueryParam("id") Long diagnosisId) {
         return extendedDao.findDiagnosisById(diagnosisId);
     }
 
@@ -36,14 +36,15 @@ public class DiagnosisResource {
     @GET
     @Path("getForPatient")
     public List<Diagnosis> getDiagnosisByPatient(@QueryParam("id") Long patientId) {
-        return extendedDao.findDiagnosisByPatient(patientId);
+        return extendedDao.getDiagnosisByPatient(patientId);
     }
 
+    /*
 
     @DELETE
     public boolean deleteDiagnosis(@QueryParam("id") Long diagnosisId){
         return extendedDao.deleteDiagnosis(diagnosisId);
-    }
+    }*/
 
     /*
     @POST
@@ -52,6 +53,7 @@ public class DiagnosisResource {
         return null;
     }
 */
-     
+
+
 
 }
